@@ -1,0 +1,36 @@
+{
+    "eslint.format.enable": true,
+    "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "biomejs.biome"
+    },
+    "typescript.tsdk": "./client/node_modules/typescript/lib",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "never",
+        "source.organizeImports.biome": "explicit",
+        "quickfix.biome": "explicit"
+    },
+    "eslint.workingDirectories": [
+        {
+            "directory": "client",
+            "changeProcessCWD": true
+        }
+    ],
+    "cucumberautocomplete.steps": [
+        "e2e/src/steps/*.steps.ts"
+    ],
+    "files.eol": "\n",
+    "editor.renderWhitespace": "all",
+    "files.insertFinalNewline": true,
+    "files.associations": {
+        ".pipelines/**/*.yaml": "azure-pipelines",
+        ".pipelines/**/*.yml": "azure-pipelines",
+        "azp-pull-request.yaml": "azure-pipelines",
+        "azure-pipelines.yml": "azure-pipelines"
+    },
+    "jest.jestCommandLine": "npm run test --",
+    "jest.rootPath": "client"
+}
