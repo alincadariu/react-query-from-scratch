@@ -1,7 +1,6 @@
-import { styled, TableCell, TableRow } from '@mui/material';
-import { useEffect, useState } from 'react';
-import type { Product } from '../api/contract';
+import { CircularProgress, styled, TableCell, TableRow } from '@mui/material';
 import { getAllProducts } from '../api/getAllProducts';
+import { useQuery } from '../tanstack-query/useQuery';
 import { ProductActions } from './ProductActions';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -18,15 +17,26 @@ const emojis = ['🍺', '🍒', '🍕'];
 const getRandomEmoji = () => emojis[Math.floor(Math.random() * emojis.length)];
 
 export const TableBodyContent = () => {
-    const [products, setProducts] = useState<Product[]>([]);
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const products = await getAllProducts();
-            setProducts(products);
-        };
+    const result = useQuery({
+        queryKey: ['products'],
+        queryFn: getAllProducts,
+    });
 
-        fetchProducts();
-    }, []);
+    if (result.isLoading) {
+        return (
+            <StyledTableRow>
+                <StyledTableCell colSpan={2}>
+                    <CircularProgress />
+                </StyledTableCell>
+            </StyledTableRow>
+        );
+    }
+
+    if (result.state === 'error') {
+        return <div>Error: {result.error.message}</div>;
+    }
+
+    const products = result.data;
 
     return products.map(product => (
         <StyledTableRow key={product.id}>

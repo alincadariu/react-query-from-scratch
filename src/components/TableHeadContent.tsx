@@ -1,7 +1,7 @@
 import { ShoppingCart } from '@mui/icons-material';
 import { Stack, styled, TableCell, TableRow, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { getAllProducts } from '../api/getAllProducts';
+import { useQuery } from '../tanstack-query/useQuery';
 import { AddProductButton } from './AddProductButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -11,16 +11,12 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export const TableHeadContent = () => {
-    const [productCount, setProductCount] = useState<number | null>(null);
+    const result = useQuery({
+        queryKey: ['products'],
+        queryFn: getAllProducts,
+    });
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const products = await getAllProducts();
-            setProductCount(products.length);
-        };
-
-        fetchProducts();
-    }, []);
+    const products = 'data' in result ? result.data : [];
 
     return (
         <>
@@ -32,8 +28,8 @@ export const TableHeadContent = () => {
                     >
                         <ShoppingCart />
                         <Typography fontWeight={600}>
-                            {productCount != null
-                                ? `Shopping cart (${productCount})`
+                            {!result.isLoading
+                                ? `Shopping cart (${products.length})`
                                 : 'Shopping cart'}
                         </Typography>
                     </Stack>

@@ -30,7 +30,7 @@ const getTheme = () =>
     });
 
 export const api = initClient(contract, {
-    baseUrl: 'https://crudcrud.com/api/fee0e53a863c417d861061081f174636',
+    baseUrl: 'https://crudcrud.com/api/e70d19586efb4c6eae444ee0696e089e',
 });
 
 createRoot(assertDefined(document.getElementById('root'), 'Root')).render(
