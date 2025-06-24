@@ -1,5 +1,7 @@
 import { ShoppingCart } from '@mui/icons-material';
 import { Stack, styled, TableCell, TableRow, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { getAllProducts } from '../api/getAllProducts';
 import { AddProductButton } from './AddProductButton';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -9,6 +11,17 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 export const TableHeadContent = () => {
+    const [productCount, setProductCount] = useState<number | null>(null);
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const products = await getAllProducts();
+            setProductCount(products.length);
+        };
+
+        fetchProducts();
+    }, []);
+
     return (
         <>
             <TableRow>
@@ -18,7 +31,11 @@ export const TableHeadContent = () => {
                         spacing={1}
                     >
                         <ShoppingCart />
-                        <Typography fontWeight={600}>Shopping cart</Typography>
+                        <Typography fontWeight={600}>
+                            {productCount != null
+                                ? `Shopping cart (${productCount})`
+                                : 'Shopping cart'}
+                        </Typography>
                     </Stack>
                 </StyledTableCell>
                 <StyledTableCell align="right">
