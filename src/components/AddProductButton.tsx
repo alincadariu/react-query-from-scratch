@@ -1,7 +1,7 @@
 import { Add } from '@mui/icons-material';
 import { Dialog, DialogTitle, IconButton } from '@mui/material';
 import { useState } from 'react';
-import { api } from '../main';
+import { addProduct } from '../api/addProduct';
 import { EditProductDialogContent } from './EditProductDialogContent';
 
 export const AddProductButton = () => {
@@ -20,10 +20,9 @@ export const AddProductButton = () => {
                 <DialogTitle>Add</DialogTitle>
                 <EditProductDialogContent
                     onSave={async newName => {
-                        await api.addProduct({
-                            body: {
-                                name: newName,
-                            },
+                        await addProduct({
+                            id: crypto.randomUUID(),
+                            name: newName,
                         });
                         onClose();
                     }}

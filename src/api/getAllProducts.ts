@@ -1,7 +1,7 @@
-import { api } from '../main';
 import type { Product } from './contract';
+import { delay } from './delay';
 
-export const getAllProducts = async () => {
-    const data = await api.getAllProducts();
-    return data.body as Product[];
-};
+export const getAllProducts = () =>
+    delay(1000).then(
+        () => JSON.parse(localStorage.getItem('products') || '[]') as Product[],
+    );

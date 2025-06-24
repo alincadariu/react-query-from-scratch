@@ -29,7 +29,7 @@ export const TableBodyContent = () => {
     }, []);
 
     return products.map(product => (
-        <StyledTableRow key={product._id}>
+        <StyledTableRow key={product.id}>
             <StyledTableCell>
                 <span style={{ fontSize: '26px', marginRight: '8px' }}>
                     {getRandomEmoji()}

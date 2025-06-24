@@ -2,7 +2,7 @@ import { Edit } from '@mui/icons-material';
 import { Dialog, DialogTitle, IconButton } from '@mui/material';
 import { useState } from 'react';
 import type { Product } from '../api/contract';
-import { api } from '../main';
+import { updateProduct } from '../api/updateProduct';
 import { EditProductDialogContent } from './EditProductDialogContent';
 
 interface EditProductButtonProps {
@@ -26,13 +26,9 @@ export const EditProductButton = ({ product }: EditProductButtonProps) => {
                 <EditProductDialogContent
                     name={product.name}
                     onSave={async newName => {
-                        await api.updateProduct({
-                            body: {
-                                name: newName,
-                            },
-                            params: {
-                                id: product._id,
-                            },
+                        await updateProduct({
+                            id: product.id,
+                            name: newName,
                         });
                         onClose();
                     }}

@@ -4,7 +4,7 @@ import { z } from 'zod';
 const c = initContract();
 
 const productSchema = z.object({
-    _id: z.string(),
+    id: z.string(),
     name: z.string(),
 });
 
